@@ -1,5 +1,5 @@
 class Solution:
-    # 为何60ms还超时=。=
+    # 时间复杂度O(Amount*len(coins))
     def coinChange(self, coins, amount):
         """
         :type coins: List[int]
@@ -9,10 +9,9 @@ class Solution:
         store = [0] * (amount + 1)
         for i in range(1, amount + 1):
             for coin in coins:
-                if (i >= coin and i - coin < amount + 1 and store[i - coin]) or (i >= coin and i - coin < amount + 1 and i % coin == 0):
+                if (i >= coin and store[i - coin]) or i % coin == 0:
                     store[i] = min(store[i - coin] + 1, store[i]) if store[i] else store[i - coin] + 1
         return store[amount] if store[amount] or len(store) == 1 else -1
-
 
     # 暴力计算时间又炸了
     # def coinChange(self, coins, amount):
@@ -27,7 +26,6 @@ class Solution:
     #         return
     #     for coin in coins:
     #         self.helper(coins, amount - coin, store, count + 1)
-
 
     # 贪心算法只能得到较优解
     # def coinChange(self, coins, amount):
