@@ -1,17 +1,42 @@
 class Solution:
-    # 时间复杂度O(Amount*len(coins))
+    # 最快的方案
     def coinChange(self, coins, amount):
         """
         :type coins: List[int]
         :type amount: int
         :rtype: int
         """
-        store = [0] * (amount + 1)
-        for i in range(1, amount + 1):
-            for coin in coins:
-                if (i >= coin and store[i - coin]) or i % coin == 0:
-                    store[i] = min(store[i - coin] + 1, store[i]) if store[i] else store[i - coin] + 1
-        return store[amount] if store[amount] or len(store) == 1 else -1
+
+        def dfs(amount, count, start):
+            if count - (-amount // coins[start]) >= result[0]: return
+            if amount % coins[start] == 0:
+                result[0] = min(result[0], count + amount // coins[start])
+                return
+            if start == n - 1: return
+            for i in range(amount // coins[start], -1, -1):
+                dfs(amount - i * coins[start], count + i, start + 1)
+
+        if not coins: return -1
+        n = len(coins)
+        max_val = amount + 1
+        result = [max_val]
+        coins.sort(reverse=True)
+        dfs(amount, 0, 0)
+        return result[0] if result[0] < max_val else -1
+
+    # 时间复杂度O(Amount*len(coins))，然而时间还是炸
+    # def coinChange(self, coins, amount):
+    #     """
+    #     :type coins: List[int]
+    #     :type amount: int
+    #     :rtype: int
+    #     """
+    #     store = [0] * (amount + 1)
+    #     for i in range(1, amount + 1):
+    #         for coin in coins:
+    #             if (i >= coin and store[i - coin]) or i % coin == 0:
+    #                 store[i] = min(store[i - coin] + 1, store[i]) if store[i] else store[i - coin] + 1
+    #     return store[amount] if store[amount] or len(store) == 1 else -1
 
     # 暴力计算时间又炸了
     # def coinChange(self, coins, amount):
