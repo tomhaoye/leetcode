@@ -5,4 +5,4 @@ class Solution:
         :rtype: List[List[int]]
         """
         init = []
-        
+        return init
