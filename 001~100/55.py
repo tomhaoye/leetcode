@@ -41,4 +41,3 @@ class Solution:
                 at_least_step_need = 0
         return at_least_step_need == 0
 
-
