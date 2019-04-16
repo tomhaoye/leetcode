@@ -15,5 +15,8 @@ class Solution:
     def helper(self, word):
         if word in self.map:
             return False;
+        for i in range(0,(1+int(len(word)/2))):
+            if word[i] != word[0-i-1]:
+                return False;
         self.map[word] = True;
         return True;
